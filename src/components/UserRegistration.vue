@@ -1,22 +1,17 @@
 <template>
-    <div>
-        <p>Test 2</p>
-        <p>{{ isSuccessful }}</p><br />
-        <input type="submit" v-on:change="createRecord()" value="Click" />
-    </div>
+  <div>
+    
+  </div>
 </template>
 
 <script>
-import CreateRecordService from '@/api-services/CreateRecord.Service'
+import UserService from '@/api-services/User.Service'
 
 export default {
-  name: 'CreateRecord',
+  name: 'UserRegistration',
   methods: {
-    createRecord () {
+    registerUser () {
         console.log("it works");
-    },
-    created () {
-        console.log("created");
 
         const formData = new FormData()
         formData.append('userID', "rsewell")
@@ -31,19 +26,14 @@ export default {
             }
         }
 
-        CreateRecordService.createRecord(formData, config).then(response => {
+        UserService.registerUser(formData, config).then(response => {
         this.isSuccessful = response.data.isSuccessful;
         })
-    }
-  },
-  data () {
-    return {
-      isSuccessful: false,
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

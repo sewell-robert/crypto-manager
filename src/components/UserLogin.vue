@@ -1,19 +1,16 @@
 <template>
   <div>
-    <p>Test 1</p>
-    <router-view></router-view>
+ 
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'App'
+  name: 'UserLogin'
 }
 </script>
 
 <style>
-#app {
-  color: gray;
-}
+
 </style>
