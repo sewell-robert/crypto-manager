@@ -9,18 +9,18 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/Login',
-    name: 'User Login',
+    path: '/',
+    name: 'UserLogin',
     component: UserLogin
   },
   {
     path: '/SignUp',
-    name: 'User Registration',
+    name: 'UserRegistration',
     component: UserRegistration
   },
   {
     path: '/AddInvestment',
-    name: 'Create Record',
+    name: 'CreateRecord',
     component: CreateRecord
   },
   {
