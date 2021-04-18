@@ -7,5 +7,8 @@ const RESOURCE_NAME = 'https://localhost:44300/api/Authentication'
 export default {
   registerUser (formData, config) {
     return axios.post(RESOURCE_NAME, formData, config)
+  },
+  loginUser (formData, config) {
+    return axios.post(RESOURCE_NAME, formData, config)
   }
 }
