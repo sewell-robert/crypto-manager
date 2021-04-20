@@ -1,8 +1,10 @@
 <template>
     <div>
-        <p>Test 2</p>
-        <p>{{ isSuccessful }}</p><br />
-        <input type="submit" v-on:change="createRecord()" value="Click" />
+      <v-container>
+        <center><h3>Add Transaction</h3></center>
+        <!-- <p>{{ isSuccessful }}</p><br />
+        <input type="submit" v-on:change="createRecord()" value="Click" /> -->
+      </v-container>
     </div>
 </template>
 
