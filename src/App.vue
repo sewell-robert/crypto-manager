@@ -1,5 +1,61 @@
 <template>
   <v-app>
+    <v-sheet
+      class="sheet-style-props"
+    >
+      <v-container class="fill-height">
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-btn
+            color="primary"
+            fab
+            dark
+            fixed
+            bottom
+            right
+            large
+            @click.stop="drawer = !drawer"
+          >
+            <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+          </v-btn>
+        </v-row>
+      </v-container>
+
+      <v-navigation-drawer
+        v-model="drawer"
+        temporary
+        app
+        bottom
+        color="white"
+      >
+        <v-list dense>
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon large color>mdi-plus</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title align="start" class="list-item-title"><router-link to="/AddInvestment" class="menu-item-title"><p>Save Transaction</p></router-link></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider><br />
+
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon large>mdi-chart-timeline-variant-shimmer</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title align="start" class="list-item-title"><router-link to="/ViewInvestments" class="menu-item-title"><p>View Investments</p></router-link></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </v-sheet>
+
     <v-app-bar
       app
       color="primary"
@@ -31,7 +87,7 @@
 
       <div v-if="isAuthenticated">
         <v-row>
-          <h5 class="welcome-user">Welcome, {{username}}!</h5>
+          <h5 class="welcome-user">Welcome, {{username}}</h5>
           <v-btn
             icon
             v-on:click="logoutUser()"
@@ -79,7 +135,8 @@ export default {
   },
   data: () => ({
     username: '',
-    isAuthenticated: false
+    isAuthenticated: false,
+    drawer: false
   }),
 };
 </script>
@@ -87,5 +144,12 @@ export default {
 <style>
   .welcome-user {
     align-self: center;
+  }
+  .list-item-title {
+    padding-top: 5px;
+  }
+  .menu-item-title {
+    text-decoration: none;
+    font-size: medium;
   }
 </style>
