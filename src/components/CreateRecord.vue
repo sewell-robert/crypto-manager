@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <center><h3>Save Transaction</h3></center><br />
+      <center><h3>Add Investment</h3></center><br />
       <!-- <v-input type="text" v-on:change="getCoinId()" v-model="txtInput"></v-input><br /> -->
       <!-- <p>1. Enter asset's name</p> -->
       <v-text-field
@@ -37,15 +37,17 @@
 
       <div v-if="isRadioBtnSelected">
         <!-- <p>3. Complete form</p> -->
+        <br />
+        <p>Exclude commas and other symbols.</p>
         <v-text-field
           v-model="amountUSD"
-          label="Amount Invested"
-          placeholder="$"
+          label="Amount Invested (USD)"
+          placeholder="Ex. 532.00 or 10000"
         ></v-text-field>
         <v-text-field
           v-model="averagePrice"
-          label="Average Price"
-          placeholder="$"
+          label="Average Price (USD)"
+          placeholder="Ex. 100 or 1.653"
         ></v-text-field>
 
         <v-btn
@@ -54,7 +56,7 @@
           v-on:click="submitForm()"
           :loading="isLoading"
         >
-          Submit
+          Save
         </v-btn>
         <p v-if="isFormIncomplete" class="errorMessage">{{ this.errorMessage }}</p>
       </div>
@@ -113,7 +115,6 @@ export default {
               vm.price = result.market_data.current_price.usd;
 
               vm.coinName = coin.name;
-              vm.isSearching = false;
               vm.isSuccessful = true;
             })
           }

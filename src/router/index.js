@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import CreateRecord from '@/components/CreateRecord'
 import UserLogin from '@/components/UserLogin'
 import UserRegistration from '@/components/UserRegistration'
+import PerformanceSnapshot from '@/components/PerformanceSnapshot'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/AddInvestment',
     name: 'CreateRecord',
     component: CreateRecord
+  },
+  {
+    path: '/PerformanceSnapshot',
+    name: 'PerformanceSnapshot',
+    component: PerformanceSnapshot
   },
   {
     path: '/about',

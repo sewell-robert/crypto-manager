@@ -37,7 +37,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title align="start" class="list-item-title"><router-link to="/AddInvestment" class="menu-item-title"><p>Save Transaction</p></router-link></v-list-item-title>
+              <v-list-item-title align="start" class="list-item-title"><router-link to="/AddInvestment" class="menu-item-title"><p>Add Investment</p></router-link></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -49,7 +49,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title align="start" class="list-item-title"><router-link to="/ViewInvestments" class="menu-item-title"><p>View Investments</p></router-link></v-list-item-title>
+              <v-list-item-title align="start" class="list-item-title"><router-link to="/PerformanceSnapshot" class="menu-item-title"><p>View Investments</p></router-link></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
