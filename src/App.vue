@@ -49,7 +49,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title align="start" class="list-item-title"><router-link to="/PerformanceSnapshot" class="menu-item-title"><p>View Investments</p></router-link></v-list-item-title>
+              <v-list-item-title align="start" class="list-item-title"><router-link to="/PerformanceSnapshot" class="menu-item-title"><p>Performance Snapshot</p></router-link></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>

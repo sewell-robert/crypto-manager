@@ -62,6 +62,67 @@
       </div>
     </v-container>
 
+    <v-spacer></v-spacer>
+
+    <v-container>
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">
+                
+              </th>
+              <th class="text-left">
+                Symbol
+              </th>
+              <th class="text-left">
+                Amount
+              </th>
+              <th class="text-left">
+                Price
+              </th>
+              <th class="text-left">
+                Quantity
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="item in investments"
+              :key="item.name"
+            >
+              <td>
+                <v-btn
+                  icon
+                  tile
+                  color="primary"
+                  elevation="2"
+                  v-on:click="submitForm()"
+                >
+                  <v-icon>mdi-pencil-outline</v-icon>
+                </v-btn>
+              </td>
+              <td>{{ item.assetSym }}</td>
+              <td>{{ item.amountUSD }}</td>
+              <td>{{ item.averagePrice }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>
+                <v-btn
+                  icon
+                  tile
+                  color="secondary"
+                  elevation="2"
+                  v-on:click="deleteRecord(item.id)"
+                >
+                  <v-icon>mdi-trash-can-outline</v-icon>
+                </v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-container>
+
     <div class="text-center ma-2">
       <v-snackbar
         v-model="isTrxComplete"
@@ -90,9 +151,19 @@ import CoinSearchService from '@/api-services/CoinSearch.Service'
 
 export default {
   name: 'CreateRecord',
+  created () {
+    CreateRecordService.getRecords(localStorage.getItem('username')).then(response => {
+
+      this.investments = response.data;
+    });
+  },
   methods: {
-    createRecord () {
-        console.log("it works");
+    deleteRecord (id) {
+        CreateRecordService.deleteRecord(id).then(response => {
+          if (response.data == true) {
+            this.$forceUpdate();
+          }
+        })
     },
     getCoinId (txtInput) {
       this.isTyping = true;
@@ -172,7 +243,8 @@ export default {
       isTrxComplete: false,
       isLoading: false,
       isFormIncomplete: false,
-      errorMessage: ''
+      errorMessage: '',
+      investments: Array
     }
   }
 }
