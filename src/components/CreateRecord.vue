@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-container>
-      <center><h3>Add Investment</h3></center><br />
-      <!-- <v-input type="text" v-on:change="getCoinId()" v-model="txtInput"></v-input><br /> -->
-      <!-- <p>1. Enter asset's name</p> -->
+      <center><h3>Add Transaction</h3></center><br />
       <v-text-field
         label="Type Asset Name"
         hide-details="auto"
@@ -14,9 +12,6 @@
 
       <div v-if="isTyping" class="results">
         <div v-if="isSuccessful">
-          <!-- <p>We found <strong>{{ coinName }}</strong>.</p><br /> -->
-
-          <!-- <p>2. Select asset</p> -->
           <v-radio-group v-model="isRadioBtnSelected">
             <v-radio
               :label="this.symbol + ' - ' + this.price + ' USD'"
@@ -36,27 +31,40 @@
       </div>
 
       <div v-if="isRadioBtnSelected">
-        <!-- <p>3. Complete form</p> -->
-        <br />
-        <p>Exclude commas and other symbols.</p>
         <v-text-field
           v-model="amountUSD"
-          label="Amount Invested (USD)"
+          label="Amount (USD)"
           placeholder="Ex. 532.00 or 10000"
+          @keyup="calculateQuantity()"
         ></v-text-field>
         <v-text-field
           v-model="averagePrice"
           label="Average Price (USD)"
           placeholder="Ex. 100 or 1.653"
+          @keyup="calculateQuantity()"
+        ></v-text-field>
+        <p>Quantity: {{ this.quantity }}</p>
+        <v-text-field
+          v-model="cryptoExchange"
+          label="Exchange (optional)"
         ></v-text-field>
 
         <v-btn
-          color="primary"
+          color="error"
           elevation="2"
-          v-on:click="submitForm()"
+          v-on:click="submitForm('Sold')"
+          :loading="isLoading"
+          class="mr-2"
+        >
+          Sold
+        </v-btn>
+        <v-btn
+          color="success"
+          elevation="2"
+          v-on:click="submitForm('Bought')"
           :loading="isLoading"
         >
-          Save
+          Bought
         </v-btn>
         <p v-if="isFormIncomplete" class="errorMessage">{{ this.errorMessage }}</p>
       </div>
@@ -70,20 +78,15 @@
           <thead>
             <tr>
               <th class="text-left">
-                
+                Date
               </th>
               <th class="text-left">
                 Symbol
               </th>
               <th class="text-left">
-                Amount
+                USD
               </th>
-              <th class="text-left">
-                Price
-              </th>
-              <th class="text-left">
-                Quantity
-              </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -91,21 +94,9 @@
               v-for="item in investments"
               :key="item.name"
             >
-              <td>
-                <v-btn
-                  icon
-                  tile
-                  color="primary"
-                  elevation="2"
-                  v-on:click="submitForm()"
-                >
-                  <v-icon>mdi-pencil-outline</v-icon>
-                </v-btn>
-              </td>
+              <td>{{ item.entryDt }}</td>
               <td>{{ item.assetSym }}</td>
               <td>{{ item.amountUSD }}</td>
-              <td>{{ item.averagePrice }}</td>
-              <td>{{ item.quantity }}</td>
               <td>
                 <v-btn
                   icon
@@ -122,6 +113,8 @@
         </template>
       </v-simple-table>
     </v-container>
+
+    <br /><br /><br />
 
     <div class="text-center ma-2">
       <v-snackbar
@@ -152,16 +145,19 @@ import CoinSearchService from '@/api-services/CoinSearch.Service'
 export default {
   name: 'CreateRecord',
   created () {
-    CreateRecordService.getRecords(localStorage.getItem('username')).then(response => {
-
-      this.investments = response.data;
-    });
+    this.loadInvestments();
   },
   methods: {
+    loadInvestments () {
+      CreateRecordService.getRecords(localStorage.getItem('username')).then(response => {
+
+        this.investments = response.data;
+      });
+    },
     deleteRecord (id) {
         CreateRecordService.deleteRecord(id).then(response => {
           if (response.data == true) {
-            this.$forceUpdate();
+            this.loadInvestments();
           }
         })
     },
@@ -194,7 +190,7 @@ export default {
         vm.isSearching =false;
       })
     },
-    submitForm () {
+    submitForm (transactionType) {
       if (this.amountUSD == '' || this.averagePrice == '') {
         this.isFormIncomplete = true;
         this.errorMessage = "Missing form values"
@@ -214,6 +210,8 @@ export default {
         formData.append('assetSymbol', this.symbol)
         formData.append('amountUSD', this.amountUSD)
         formData.append('averagePrice', this.averagePrice)
+        formData.append('transactionType', transactionType)
+        formData.append('cryptoExchange', this.cryptoExchange)
 
         const config = {
             headers: {
@@ -224,7 +222,22 @@ export default {
         CreateRecordService.createRecord(formData, config).then(response => {
           this.isTrxComplete = response.data;
           this.isLoading = false;
+
+          if (this.isTrxComplete) {
+            this.loadInvestments();
+          }
         })
+    },
+    calculateQuantity() {
+      if (this.amountUSD == '' || this.averagePrice == '') {
+        this.quantity = 0;
+        return;
+      }
+      else {
+        var amount = parseFloat(this.amountUSD);
+        var price = parseFloat(this.averagePrice);
+        this.quantity = (amount / price).toFixed(2);
+      }
     }
   },
   data () {
@@ -239,6 +252,8 @@ export default {
       price: '',
       amountUSD: '',
       averagePrice: '',
+      quantity: 0,
+      cryptoExchange: '',
       username: '',
       isTrxComplete: false,
       isLoading: false,

@@ -37,6 +37,7 @@
           type="button"
           :disabled="!valid"
           v-on:click="loginUser()"
+          :loading="isLoading"
         >
           Login
         </v-btn>
@@ -64,11 +65,13 @@ export default {
   name: 'UserLogin',
   created () {
     if (localStorage.getItem('username')) {
-      this.$router.push('AddInvestment');
+      this.$router.push('AddTransaction');
     }
   },
   methods: {
     loginUser () {
+        this.isLoading = true;
+
         const formData = new FormData()
         formData.append('username', this.username)
         formData.append('password', this.password)
@@ -86,12 +89,14 @@ export default {
           if (this.isAuthenticated == true)
           {
             localStorage.setItem('username', this.username)
-            this.$router.push('AddInvestment');
+            this.$router.push('AddTransaction');
           }
           else
           {
             this.invalidUsernamePassword = "Invalid username or password."
           }
+
+          this.isLoading = false;
         })
     },
     routeToSignUp () {
@@ -107,7 +112,8 @@ export default {
     nameRules: [
       v => !!v || 'Field is required',
       v => v.length <= 10 || 'Must be less than 20 characters',
-    ]
+    ],
+    isLoading: false
   })
 }
 </script>

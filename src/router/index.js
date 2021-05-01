@@ -20,7 +20,7 @@ const routes = [
     component: UserRegistration
   },
   {
-    path: '/AddInvestment',
+    path: '/AddTransaction',
     name: 'CreateRecord',
     component: CreateRecord
   },

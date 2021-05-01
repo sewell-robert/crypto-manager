@@ -37,7 +37,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title align="start" class="list-item-title"><router-link to="/AddInvestment" class="menu-item-title"><p>Add Investment</p></router-link></v-list-item-title>
+              <v-list-item-title align="start" class="list-item-title"><router-link to="/AddTransaction" class="menu-item-title"><p>Add Transaction</p></router-link></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 

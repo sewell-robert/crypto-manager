@@ -51,6 +51,7 @@
           type="button"
           :disabled="!valid"
           v-on:click="registerUser()"
+          :loading="isLoading"
         >
           Sign Up
         </v-btn>
@@ -70,6 +71,8 @@ export default {
   name: 'UserRegistration',
   methods: {
     registerUser () {
+        this.isLoading = true;
+
         const formData = new FormData()
         formData.append('username', this.username)
         formData.append('password', this.password)
@@ -92,6 +95,8 @@ export default {
         {
           this.errorMessage = "Registration failed. Please try again later."
         }
+
+        this.isLoading = false;
       })
     }
   },
@@ -110,6 +115,7 @@ export default {
       v => !!v || 'E-mail is required',
       v => /.+@.+/.test(v) || 'E-mail must be valid',
     ],
+    isLoading: false
   })
 }
 </script>
