@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
-import CreateRecord from '@/components/CreateRecord'
-import UserLogin from '@/components/UserLogin'
-import UserRegistration from '@/components/UserRegistration'
-import PerformanceSnapshot from '@/components/PerformanceSnapshot'
+import CreateRecord from '@/views/CreateRecord'
+import UserLogin from '@/views/UserLogin'
+import UserRegistration from '@/views/UserRegistration'
+import PerformanceSnapshot from '@/views/PerformanceSnapshot'
 
 Vue.use(VueRouter)
 
@@ -28,14 +27,6 @@ const routes = [
     path: '/PerformanceSnapshot',
     name: 'PerformanceSnapshot',
     component: PerformanceSnapshot
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 
